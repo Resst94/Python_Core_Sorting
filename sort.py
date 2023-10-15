@@ -5,7 +5,8 @@ import re
 import sys
 from pathlib import Path
 
-# Проводить транслітерацію кирилічного алфавіту на латинський
+# Transliterates the Cyrillic alphabet into Latin 
+
 UKRAINIAN_SYMBOLS = 'абвгдеєжзиіїйклмнопрстуфхцчшщьюя'
 TRANSLATION = ("a", "b", "v", "g", "d", "e", "je", "zh", "z", "y", "i", "ji", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u",
                "f", "h", "ts", "ch", "sh", "sch", "", "ju", "ja")
@@ -85,7 +86,7 @@ def process_folder(folder):
                 others.append(item)
                 shutil.move(item_path, os.path.join('others',normalized_item))
         elif os.path.isdir(item_path):
-            # Рекурсивно обробляємо вкладені папки
+            # Recursively process nested folders
             if item not in ('images', 'video', 'documents', 'audio', 'archives', 'others'):
                 process_folder(item_path)
                 folders.append(item)
@@ -93,7 +94,7 @@ def process_folder(folder):
             else:
                 shutil.rmtree(item_path)
         else:
-            # Ігноруємо символічні посилання та інші спеціальні файли
+            # We ignore symbolic links and other special files
             continue
 def remove_empty_folders(path):
     for root, dirs, files in os.walk(path, topdown=False):
@@ -107,7 +108,7 @@ if __name__ == "__main__":
         print("Usage: python sort.py <source_folder>")
         sys.exit(1)
     
-    source_folder = sys.argv[1]  # Шлях до папки, яку потрібно сортувати
+    source_folder = sys.argv[1]  # The path to the folder to sort
 
     os.makedirs('images', exist_ok=True)
     os.makedirs('video', exist_ok=True)
