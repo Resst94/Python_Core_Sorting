@@ -112,13 +112,7 @@ def remove_empty_folders(path):
             if not os.listdir(folder_path):
                 os.rmdir(folder_path)
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python sort.py <source_folder>")
-        sys.exit(1)
-    
-    source_folder = sys.argv[1]  # The path to the folder to sort
-
+def main(source_folder):
     os.makedirs('images', exist_ok=True)
     os.makedirs('video', exist_ok=True)
     os.makedirs('documents', exist_ok=True)
@@ -137,3 +131,10 @@ if __name__ == "__main__":
     print(f"Unknown Extensions: {unknown_extensions}\n")
     print(f"Others: {others}\n")
     print(f"Known Extensions: {known_extensions}\n")
+
+if __name__ == "__main__":
+    source_folder = sys.argv[1]
+    main(source_folder)
+
+
+    
