@@ -59,18 +59,22 @@ def process_folder(folder):
                 images_files.append(item)
                 known_extensions.add(extension)
                 shutil.move(item_path, os.path.join('images', normalized_item))
+
             elif extension in ('avi', 'mp4', 'mov', 'mkv'):
                 video_files.append(item)
                 known_extensions.add(extension)
                 shutil.move(item_path, os.path.join('video', normalized_item))
+
             elif extension in ('doc', 'docx', 'txt', 'pdf', 'xlsx', 'pptx'):
                 doc_files.append(item)
                 known_extensions.add(extension)
                 shutil.move(item_path, os.path.join('documents', normalized_item))
+
             elif extension in ('mp3', 'ogg', 'wav', 'amr'):
                 audio_files.append(item)
                 known_extensions.add(extension)
                 shutil.move(item_path, os.path.join('audio', normalized_item))
+
             elif extension in ('zip', 'gz', 'tar'):
                 archives.append(item)
                 known_extensions.add(extension)
@@ -78,13 +82,16 @@ def process_folder(folder):
                 if zipfile.is_zipfile(item_path):
                     with zipfile.ZipFile(item_path, 'r') as zip_ref:
                         zip_ref.extractall(archive_folder)
+
                 else:
                     print(f"Skipping {item}: Not a valid zip file")
                 os.remove(item_path)
+
             else:
                 unknown_extensions.add(extension)
                 others.append(item)
                 shutil.move(item_path, os.path.join('others',normalized_item))
+
         elif os.path.isdir(item_path):
             # Recursively process nested folders
             if item not in ('images', 'video', 'documents', 'audio', 'archives', 'others'):
@@ -96,6 +103,8 @@ def process_folder(folder):
         else:
             # We ignore symbolic links and other special files
             continue
+
+
 def remove_empty_folders(path):
     for root, dirs, files in os.walk(path, topdown=False):
         for folder in dirs:
@@ -126,5 +135,5 @@ if __name__ == "__main__":
     print(f"Audio: {audio_files}\n")
     print(f"Archives: {archives}\n")
     print(f"Unknown Extensions: {unknown_extensions}\n")
-    print(f"Files with No Extensions: {others}\n")
+    print(f"Others: {others}\n")
     print(f"Known Extensions: {known_extensions}\n")
